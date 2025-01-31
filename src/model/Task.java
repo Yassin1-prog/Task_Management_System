@@ -28,6 +28,14 @@ public class Task {
 
     // Getters and setters for all fields
 
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
     public void updateTask(String title, String description, Category category, 
                            Priority priority, LocalDate deadline) {
         this.title = title;
