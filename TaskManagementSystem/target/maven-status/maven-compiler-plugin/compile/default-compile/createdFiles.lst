@@ -1,0 +1,14 @@
+com\medialab\model\Priority.class
+com\medialab\model\Reminder$ReminderType.class
+com\medialab\util\DataManager.class
+com\medialab\model\Task.class
+com\medialab\controller\CategoryController.class
+com\medialab\App.class
+com\medialab\model\Task$TaskStatus.class
+com\medialab\controller\PriorityController.class
+com\medialab\util\JsonManager.class
+com\medialab\controller\TaskController.class
+com\medialab\controller\ReminderController.class
+com\medialab\model\Category.class
+com\medialab\model\Reminder.class
+com\medialab\util\LocalDateAdapter.class

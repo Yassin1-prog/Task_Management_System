@@ -1,0 +1,12 @@
+C:\GitHub\Task_Management_System\TaskManagementSystem\src\main\java\com\medialab\App.java
+C:\GitHub\Task_Management_System\TaskManagementSystem\src\main\java\com\medialab\controller\CategoryController.java
+C:\GitHub\Task_Management_System\TaskManagementSystem\src\main\java\com\medialab\controller\PriorityController.java
+C:\GitHub\Task_Management_System\TaskManagementSystem\src\main\java\com\medialab\controller\ReminderController.java
+C:\GitHub\Task_Management_System\TaskManagementSystem\src\main\java\com\medialab\controller\TaskController.java
+C:\GitHub\Task_Management_System\TaskManagementSystem\src\main\java\com\medialab\model\Category.java
+C:\GitHub\Task_Management_System\TaskManagementSystem\src\main\java\com\medialab\model\Priority.java
+C:\GitHub\Task_Management_System\TaskManagementSystem\src\main\java\com\medialab\model\Reminder.java
+C:\GitHub\Task_Management_System\TaskManagementSystem\src\main\java\com\medialab\model\Task.java
+C:\GitHub\Task_Management_System\TaskManagementSystem\src\main\java\com\medialab\util\DataManager.java
+C:\GitHub\Task_Management_System\TaskManagementSystem\src\main\java\com\medialab\util\JsonManager.java
+C:\GitHub\Task_Management_System\TaskManagementSystem\src\main\java\com\medialab\util\LocalDateAdapter.java
