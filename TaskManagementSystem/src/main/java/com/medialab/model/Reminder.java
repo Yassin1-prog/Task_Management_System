@@ -28,6 +28,10 @@ public class Reminder {
         return task;
     }
 
+    public ReminderType getType() {
+        return type;
+    }
+
     public LocalDate getReminderDate() {
         return reminderDate;
     }

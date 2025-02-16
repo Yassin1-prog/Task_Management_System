@@ -1,0 +1,36 @@
+[
+  {
+    "task": {
+      "title": "Complete Project",
+      "description": "Finish the Java project implementation",
+      "category": {
+        "name": "Work Projects"
+      },
+      "priority": {
+        "name": "Default",
+        "isDefault": true
+      },
+      "deadline": "2025-02-23",
+      "status": "OPEN"
+    },
+    "type": "ONE_DAY_BEFORE",
+    "reminderDate": "2025-02-22"
+  },
+  {
+    "task": {
+      "title": "Complete Project",
+      "description": "Finish the Java project implementation",
+      "category": {
+        "name": "Work Projects"
+      },
+      "priority": {
+        "name": "Default",
+        "isDefault": true
+      },
+      "deadline": "2025-02-23",
+      "status": "OPEN"
+    },
+    "type": "CUSTOM_DATE",
+    "reminderDate": "2025-02-18"
+  }
+]

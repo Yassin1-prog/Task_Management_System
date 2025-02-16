@@ -36,8 +36,20 @@ public class Task {
         return title;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public Category getCategory() {
         return category;
+    }
+
+    public String getCategoryName() {
+        return category.getName();
+    }
+
+    public String getPriorityName() {
+        return priority.getName();
     }
 
     public TaskStatus getStatus() {

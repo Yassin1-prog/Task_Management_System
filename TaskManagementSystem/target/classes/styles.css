@@ -1,0 +1,69 @@
+.root {
+    -fx-font-family: 'System';
+}
+
+.button {
+    -fx-background-color: #0d6efd;
+    -fx-text-fill: white;
+    -fx-padding: 8 16;
+    -fx-background-radius: 4;
+}
+
+.button:hover {
+    -fx-background-color: #0b5ed7;
+}
+
+.delete-button {
+    -fx-background-color: #dc3545;
+}
+
+.delete-button:hover {
+    -fx-background-color: #bb2d3b;
+}
+
+.tab-pane {
+    -fx-background-color: transparent;
+}
+
+.tab {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 8 15;
+}
+
+.tab:selected {
+    -fx-background-color: white;
+}
+
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+}
+
+.table-view .column-header {
+    -fx-background-color: #f8f9fa;
+}
+
+.text-field, .combo-box, .date-picker {
+    -fx-background-color: white;
+    -fx-border-color: #ced4da;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 5;
+}
+
+.stats-box {
+    -fx-background-color: white;
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.stat-container {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 15;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-alignment: center;
+}

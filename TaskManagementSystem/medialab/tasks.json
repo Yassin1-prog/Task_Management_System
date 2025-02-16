@@ -1,0 +1,28 @@
+[
+  {
+    "title": "Complete Project",
+    "description": "Finish the Java project implementation",
+    "category": {
+      "name": "Work Projects"
+    },
+    "priority": {
+      "name": "Default",
+      "isDefault": true
+    },
+    "deadline": "2025-02-23",
+    "status": "OPEN"
+  },
+  {
+    "title": "Past Due Task",
+    "description": "This task is already delayed",
+    "category": {
+      "name": "Work Projects"
+    },
+    "priority": {
+      "name": "Default",
+      "isDefault": true
+    },
+    "deadline": "2025-02-15",
+    "status": "DELAYED"
+  }
+]

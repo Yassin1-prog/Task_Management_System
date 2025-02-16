@@ -8,9 +8,12 @@ import java.util.stream.Collectors;
 
 public class TaskController {
     private List<Task> tasks;
+    private List<Priority> priorities;
 
     public TaskController() {
         tasks = new ArrayList<>();
+        priorities = new ArrayList<>();
+        priorities.add(new Priority("Default", true));  
     }
 
     public void initializeTasks(List<Task> loadedTasks) {
@@ -18,12 +21,28 @@ public class TaskController {
         tasks.addAll(loadedTasks);
     }
 
+    public void initializePriorities(List<Priority> loadedPriorities) {
+        priorities.clear();
+        priorities.addAll(loadedPriorities);
+    }
+    
+    public void createDefaultPriority() {
+        priorities.add(new Priority("Default", true));
+    }
+
+    public Priority getDefaultPriority() {
+        for(Priority priority : priorities) {
+            if(priority.isDefaultPriority()) {
+                return priority;
+            }
+        }
+        return null;
+    }
+
     public void createTask(String title, String description, Category category,
                           Priority priority, LocalDate deadline) {
         Task newTask = new Task(title, description, category, priority, deadline);
         tasks.add(newTask);
-        category.addTask(newTask);
-        priority.addTask(newTask);
     }
 
 
@@ -46,6 +65,15 @@ public class TaskController {
         return results;
     }
 
+    public List<Task> searchTasks(String title, String categoryName, String priorityName) {
+        List<Task> results = tasks.stream()
+        .filter(task -> task.getTitle().contains(title) || 
+                        task.getCategoryName().contains(categoryName) || 
+                        task.getPriorityName().equals(priorityName))
+        .collect(Collectors.toList());
+        return results;
+    }
+
     public void checkDelayedTasks() {
         for(Task task : tasks) {
             task.updateStatus();
@@ -56,9 +84,62 @@ public class TaskController {
         return tasks;
     }
 
+    public List<Priority> getAllPriorities() {
+        return priorities;
+    }
+
+    public boolean priorityExists(String name) {
+        return priorities.stream().anyMatch(priority -> priority.getName().equals(name));
+    }
+
+    public void createPriority(String name) {
+        priorities.add(new Priority(name, false));
+    }
+
+    public void updatePriority(Priority priority, String newName) {
+        priority.setName(newName);
+    }
+
+    public void deletePriority(Priority priority) {
+        priorities.remove(priority);
+        updateTaskPriorities(priority, getDefaultPriority());
+    }
+
     public List<Task> getTasksDueWithinDays(int days) {
-        // TODO: Return tasks due within specified days
-        return new ArrayList<>();
+        LocalDate now = LocalDate.now();
+        LocalDate futureDate = now.plusDays(days);
+        List<Task> results = tasks.stream()
+        .filter(task -> task.getDeadline().isBefore(futureDate) && !task.getDeadline().isBefore(now))
+        .collect(Collectors.toList());
+        return results;
+    }
+
+    // Delete tasks by category (needed when deleting a category)
+    public void deleteTasksByCategory(Category category) {
+        tasks.removeIf(task -> task.getCategory().equals(category));
+    }
+
+    // Update task priorities when a priority level is deleted
+    public void updateTaskPriorities(Priority deletedPriority, Priority newPriority) {
+        for (Task task : tasks) {
+            if (task.getPriority().equals(deletedPriority)) {
+                task.setPriority(newPriority);
+            }
+        }
+    }
+
+    // Get tasks by category (needed for UI display)
+    public List<Task> getTasksByCategory(Category category) {
+        return tasks.stream()
+            .filter(task -> task.getCategory().equals(category))
+            .collect(Collectors.toList());
+    }
+
+    // Get tasks by status
+    public List<Task> getTasksByStatus(Task.TaskStatus status) {
+        return tasks.stream()
+            .filter(task -> task.getStatus() == status)
+            .collect(Collectors.toList());
     }
 
     // Statistics methods

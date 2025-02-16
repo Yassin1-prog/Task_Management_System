@@ -24,12 +24,26 @@ public class CategoryController {
         category.setName(newName);
     }
 
-    public void deleteCategory(Category category) {
-        category.removeAllTasks();
-        categories.remove(category);
+    public List<Category> getAllCategories() {
+        return categories;
     }
 
-    public List<Category> getAllCategories() {
-        return new ArrayList<>(categories);
+    // Delete category (including associated tasks)
+    public void deleteCategory(Category category, TaskController taskController) {
+        taskController.deleteTasksByCategory(category); // Delete associated tasks
+        categories.remove(category); // Delete the category
+    }
+
+    // Check if category exists
+    public boolean categoryExists(String name) {
+        return categories.stream().anyMatch(category -> category.getName().equals(name));
+    }
+
+    // Get category by name
+    public Category getCategoryByName(String name) {
+        return categories.stream()
+            .filter(category -> category.getName().equals(name))
+            .findFirst()
+            .orElse(null);
     }
 }

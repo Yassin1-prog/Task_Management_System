@@ -11,7 +11,6 @@ public class TestMain {
     private static TaskController taskController;
     private static CategoryController categoryController;
     private static ReminderController reminderController;
-    private static PriorityController priorityController;
     private static DataManager dataManager;
 
     public static void main(String[] args) {
@@ -37,8 +36,7 @@ public class TestMain {
         taskController = new TaskController();
         categoryController = new CategoryController();
         reminderController = new ReminderController();
-        priorityController = new PriorityController();
-        dataManager = new DataManager(taskController, categoryController, reminderController, priorityController);
+        dataManager = new DataManager(taskController, categoryController, reminderController);
     }
 
     private static void testCategoryOperations() {
@@ -72,7 +70,7 @@ public class TestMain {
             "Complete Project",
             "Finish the Java project implementation",
             category,
-            priorityController.getDefaultPriority(),
+            taskController.getDefaultPriority(),
             LocalDate.now().plusDays(7)
         );
 
@@ -80,7 +78,7 @@ public class TestMain {
             "Past Due Task",
             "This task is already delayed",
             category,
-            priorityController.getDefaultPriority(),
+            taskController.getDefaultPriority(),
             LocalDate.now().minusDays(1)
         );
 
@@ -91,7 +89,7 @@ public class TestMain {
         
         // Test search
         System.out.println("\nSearching for tasks with 'Project' in title:");
-        taskController.searchTasks("Project", null, null).forEach(task ->
+        taskController.searchTasks("Project", "", "").forEach(task ->
             System.out.println(" - " + task.getTitle()));
 
         // Check delayed tasks
@@ -132,7 +130,7 @@ public class TestMain {
             System.out.println("Data saved successfully");
         } catch (Exception e) {
             System.out.println("Error saving data: " + e.getMessage());
-           //e.printStackTrace();
+           e.printStackTrace();
         }
     }
 
@@ -143,7 +141,7 @@ public class TestMain {
             System.out.println("Data loaded successfully");
         } catch (Exception e) {
             System.out.println("Error loading data: " + e.getMessage());
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 

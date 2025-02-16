@@ -1,24 +1,18 @@
 package com.medialab.util;
 
 import com.google.gson.*;
-import com.medialab.model.*;
 import java.io.*;
 import java.nio.file.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.lang.reflect.Type;
 
 public class JsonManager {
     private static final String DATA_DIR = "medialab";
-    private static final String TASKS_FILE = "tasks.json";
-    private static final String CATEGORIES_FILE = "categories.json";
-    private static final String PRIORITIES_FILE = "priorities.json";
-    private static final String REMINDERS_FILE = "reminders.json";
     
     private static final Gson gson = new GsonBuilder()
-        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-        .setPrettyPrinting()
-        .create();
+    .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+    .setPrettyPrinting()
+    .create();
 
     public static void initializeDataDirectory() {
         try {
@@ -37,7 +31,7 @@ public class JsonManager {
         }
     }
 
-    public static <T> T loadFromJson(String filename, Class<T> type) {
+    public static <T> T loadFromJson(String filename,  Type type) {
         Path filePath = Paths.get(DATA_DIR, filename);
         if (!Files.exists(filePath)) {
             return null;
