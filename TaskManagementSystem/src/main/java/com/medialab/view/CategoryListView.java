@@ -1,6 +1,7 @@
 package com.medialab.view;
 
 import com.medialab.controller.CategoryController;
+import com.medialab.controller.ReminderController;
 import com.medialab.controller.TaskController;
 import com.medialab.model.Category;
 import com.medialab.view.components.CategoryView;
@@ -15,11 +16,15 @@ public class CategoryListView extends BorderPane {
     private CategoryController categoryController;
     private TaskController taskController; // Add TaskController
     private ListView<CategoryView> categoryListView;
+    private ReminderController reminderController;
+    private MainView mainView;
 
-    public CategoryListView(CategoryController categoryController, TaskController taskController) {
+    public CategoryListView(CategoryController categoryController, TaskController taskController, ReminderController reminderController, MainView mainView) {
         this.categoryController = categoryController;
         this.taskController = taskController; // Initialize TaskController
+        this.reminderController = reminderController;
         categoryListView = new ListView<>();
+        this.mainView = mainView;
 
         // Load categories into the list
         loadCategories();
@@ -72,9 +77,16 @@ public class CategoryListView extends BorderPane {
         // Delete the selected category and its associated tasks
         CategoryView selectedCategoryView = categoryListView.getSelectionModel().getSelectedItem();
         if (selectedCategoryView != null) {
+            String deletedCategory = selectedCategoryView.getCategory().getName();
+            // Find and delete reminders for  tasks linked to the deleted category
+            taskController.getAllTasks().stream()
+                .filter(task -> deletedCategory.equals(task.getCategoryName()))
+                .forEach(task->reminderController.deleteRemindersForTask(task));
             // Call the backend method to delete the category and its tasks
             categoryController.deleteCategory(selectedCategoryView.getCategory(), taskController);
+
             loadCategories(); // Refresh the category list
+            mainView.refreshStatistics(); // when a category is deleted tasks get deleted as well
         }
     }
 }

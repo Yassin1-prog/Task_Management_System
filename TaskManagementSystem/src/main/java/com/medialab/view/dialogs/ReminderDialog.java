@@ -54,8 +54,17 @@ public class ReminderDialog extends Dialog<Reminder> {
 
         // Add validation
         taskComboBox.valueProperty().addListener((observable, oldValue, newValue) -> validateForm());
-        typeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> validateForm());
         customDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> validateForm());
+
+        // datepicker is disabled if the type is not custom date.
+        typeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            boolean isCustomDate = newValue == Reminder.ReminderType.CUSTOM_DATE;
+            customDatePicker.setDisable(!isCustomDate);      
+            if (!isCustomDate) {
+                customDatePicker.setValue(null); // Clear the date if not CUSTOM_DATE
+            }
+            validateForm();
+        });
 
         // Set the result converter
         this.setResultConverter(new Callback<ButtonType, Reminder>() {
@@ -74,11 +83,18 @@ public class ReminderDialog extends Dialog<Reminder> {
     }
 
     private void validateForm() {
+        boolean isCustomDate = typeComboBox.getValue() == Reminder.ReminderType.CUSTOM_DATE;
+        // reminders onnly make sense if they are not after deadlines and are after today
+        boolean hasValidDate = customDatePicker.getValue() != null && customDatePicker.getValue().isAfter(LocalDate.now()) 
+        && !customDatePicker.getValue().isAfter(taskController.getTaskByTitle(taskComboBox.getValue()).getDeadline()); 
+    
         boolean isValid = taskComboBox.getValue() != null &&
                           typeComboBox.getValue() != null &&
-                          (typeComboBox.getValue() != Reminder.ReminderType.CUSTOM_DATE || customDatePicker.getValue() != null);
+                          (!isCustomDate || hasValidDate); // Only check date if CUSTOM_DATE is selected
+    
         this.getDialogPane().lookupButton(saveButtonType).setDisable(!isValid);
     }
+    
 
     public void setReminder(Reminder reminder) {
         taskComboBox.setValue(reminder.getTaskTitle());

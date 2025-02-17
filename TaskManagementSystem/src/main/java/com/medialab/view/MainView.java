@@ -14,6 +14,11 @@ public class MainView extends BorderPane {
     private CategoryController categoryController;
     private ReminderController reminderController;
 
+    private Label totalTasksLabel;
+    private Label completedTasksLabel;
+    private Label delayedTasksLabel;
+    private Label dueSoonLabel;
+
     public MainView(TaskController taskController, CategoryController categoryController, ReminderController reminderController) {
         this.taskController = taskController;
         this.categoryController = categoryController;
@@ -23,10 +28,12 @@ public class MainView extends BorderPane {
 
     private void initializeUI() {
         // Top section with summary information
-        Label totalTasksLabel = new Label("Total Tasks: " + taskController.getTotalTaskCount());
-        Label completedTasksLabel = new Label("Completed Tasks: " + taskController.getCompletedTaskCount());
-        Label delayedTasksLabel = new Label("Delayed Tasks: " + taskController.getDelayedTaskCount());
-        Label dueSoonLabel = new Label("Tasks Due in 7 Days: " + taskController.getTasksDueWithinDays(7).size());
+        totalTasksLabel = new Label();
+        completedTasksLabel = new Label();
+        delayedTasksLabel = new Label();
+        dueSoonLabel = new Label();
+
+        refreshStatistics();
 
         VBox topSection = new VBox(10, totalTasksLabel, completedTasksLabel, delayedTasksLabel, dueSoonLabel);
 
@@ -41,12 +48,16 @@ public class MainView extends BorderPane {
 
         tabPane.getTabs().addAll(taskTab, categoryTab, reminderTab, priorityTab, searchTab);
 
+        // tasktab is the default tab
+        taskTab.setContent(new TaskListView(taskController, categoryController, reminderController, this));
+        tabPane.getSelectionModel().select(taskTab);
+
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (newTab != null) {
                 if (newTab == taskTab) {
-                    newTab.setContent(new TaskListView(taskController, categoryController, reminderController));
+                    newTab.setContent(new TaskListView(taskController, categoryController, reminderController, this));
                 } else if (newTab == categoryTab) {
-                    newTab.setContent(new CategoryListView(categoryController, taskController));
+                    newTab.setContent(new CategoryListView(categoryController, taskController, reminderController, this));
                 } else if (newTab == reminderTab) {
                     newTab.setContent(new ReminderListView(reminderController, taskController));
                 } else if (newTab == priorityTab) {
@@ -60,5 +71,13 @@ public class MainView extends BorderPane {
         // Main layout
         this.setTop(topSection);
         this.setCenter(tabPane);
+    }
+
+    // Method to refresh the statistics labels
+    public void refreshStatistics() {
+        totalTasksLabel.setText("Total Tasks: " + taskController.getTotalTaskCount());
+        completedTasksLabel.setText("Completed Tasks: " + taskController.getCompletedTaskCount());
+        delayedTasksLabel.setText("Delayed Tasks: " + taskController.getDelayedTaskCount());
+        dueSoonLabel.setText("Tasks Due in 7 Days: " + taskController.getTasksDueWithinDays(7).size());
     }
 }

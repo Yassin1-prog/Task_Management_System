@@ -4,6 +4,7 @@ import com.medialab.controller.CategoryController;
 import com.medialab.controller.ReminderController;
 import com.medialab.controller.TaskController;
 import com.medialab.model.Task;
+import com.medialab.model.Task.TaskStatus;
 import com.medialab.view.components.TaskView;
 import com.medialab.view.dialogs.TaskDialog;
 
@@ -17,15 +18,18 @@ public class TaskListView extends BorderPane {
     private ListView<TaskView> taskListView;
     private CategoryController categoryController;
     private ReminderController reminderController;
+    private MainView mainView;
 
-    public TaskListView(TaskController taskController, CategoryController categoryController, ReminderController reminderController) {
+    public TaskListView(TaskController taskController, CategoryController categoryController, ReminderController reminderController, MainView mainView) {
         this.taskController = taskController;
         taskListView = new ListView<>();
         this.categoryController = categoryController;
         this.reminderController = reminderController;
+        this.mainView = mainView;
 
         // Load tasks into the list
         loadTasks();
+        mainView.refreshStatistics();
 
         // Add buttons for adding/editing/deleting tasks
         Button addButton = new Button("Add Task");
@@ -53,8 +57,9 @@ public class TaskListView extends BorderPane {
         // Open TaskDialog for adding a new task
         TaskDialog dialog = new TaskDialog(taskController, categoryController);
         dialog.showAndWait().ifPresent(task -> {
-            taskController.createTask(task.getTitle(), task.getDescription(), task.getCategory(), task.getPriority(), task.getDeadline());
+            taskController.createTask(task.getTitle(), task.getDescription(), task.getCategory(), task.getPriority(), task.getDeadline(), task.getStatus());
             loadTasks(); // Refresh the task list
+            mainView.refreshStatistics();
         });
     }
 
@@ -65,8 +70,12 @@ public class TaskListView extends BorderPane {
             TaskDialog dialog = new TaskDialog(taskController, categoryController);
             dialog.setTask(selectedTaskView.getTask());
             dialog.showAndWait().ifPresent(task -> {
-                taskController.updateTask(selectedTaskView.getTask(), task.getTitle(), task.getDescription(), task.getCategory(), task.getPriority(), task.getDeadline());
+                taskController.updateTask(selectedTaskView.getTask(), task.getTitle(), task.getDescription(), task.getCategory(), task.getPriority(), task.getDeadline(), task.getStatus());
+                if(task.getStatus() == TaskStatus.COMPLETED) {
+                    reminderController.deleteRemindersForTask(selectedTaskView.getTask());  // WHEN TASK IS MARKED AS COMPLETED, DELETE ALL REMINDERS FOR THAT TASK
+                }
                 loadTasks(); // Refresh the task list
+                mainView.refreshStatistics();
             });
         }
     }
@@ -78,6 +87,7 @@ public class TaskListView extends BorderPane {
             reminderController.deleteRemindersForTask(selectedTaskView.getTask());
             taskController.deleteTask(selectedTaskView.getTask());
             loadTasks(); // Refresh the task list
+            mainView.refreshStatistics();
         }
     }
 }

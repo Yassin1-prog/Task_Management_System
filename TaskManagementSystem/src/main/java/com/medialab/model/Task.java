@@ -17,13 +17,13 @@ public class Task {
 
     // Constructor
     public Task(String title, String description, Category category, 
-                Priority priority, LocalDate deadline) {
+                Priority priority, LocalDate deadline, TaskStatus status) {
         this.title = title;
         this.description = description;
         this.category = category;
         this.priority = priority;
         this.deadline = deadline;
-        this.status = TaskStatus.OPEN;
+        this.status = status;
     }
 
     // Getters and setters for all fields
@@ -68,12 +68,13 @@ public class Task {
     }
 
     public void updateTask(String title, String description, Category category, 
-                           Priority priority, LocalDate deadline) {
+                           Priority priority, LocalDate deadline, TaskStatus status) {
         this.title = title;
         this.description = description;
         this.category = category;
         this.priority = priority;
         this.deadline = deadline;
+        this.status = status;
     }
 
     public LocalDate getDeadline() {

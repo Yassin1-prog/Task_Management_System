@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 public class TaskDialog extends Dialog<Task> {
@@ -42,7 +43,11 @@ public class TaskDialog extends Dialog<Task> {
         // Populate category and priority combo boxes as well as task status
         categoryController.getAllCategories().forEach(category -> categoryComboBox.getItems().add(category.getName()));
         taskController.getAllPriorities().forEach(priority -> priorityComboBox.getItems().add(priority.getName()));
-        statusComboBox.getItems().addAll(Task.TaskStatus.values());
+        statusComboBox.getItems().addAll(
+            Arrays.stream(Task.TaskStatus.values())
+                .filter(status -> status != Task.TaskStatus.DELAYED)
+                .toList() // dont let user set status as delayed, only the system
+        );
 
     
         this.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
@@ -85,7 +90,8 @@ public class TaskDialog extends Dialog<Task> {
                             descriptionField.getText(),
                             categoryController.getCategoryByName(categoryComboBox.getValue()),
                             taskController.getPriorityByName(priorityComboBox.getValue()),
-                            deadlinePicker.getValue()
+                            deadlinePicker.getValue(),
+                            statusComboBox.getValue()
                     );
                 }
                 return null;

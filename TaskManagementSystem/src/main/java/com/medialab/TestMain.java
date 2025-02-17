@@ -71,7 +71,8 @@ public class TestMain {
             "Finish the Java project implementation",
             category,
             taskController.getDefaultPriority(),
-            LocalDate.now().plusDays(7)
+            LocalDate.now().plusDays(7),
+            Task.TaskStatus.IN_PROGRESS
         );
 
         taskController.createTask(
@@ -79,7 +80,8 @@ public class TestMain {
             "This task is already delayed",
             category,
             taskController.getDefaultPriority(),
-            LocalDate.now().minusDays(1)
+            LocalDate.now().minusDays(1),
+            Task.TaskStatus.IN_PROGRESS
         );
 
         // Print tasks

@@ -1,6 +1,8 @@
 package com.medialab.controller;
 
 import com.medialab.model.*;
+import com.medialab.model.Task.TaskStatus;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
@@ -40,16 +42,16 @@ public class TaskController {
     }
 
     public void createTask(String title, String description, Category category,
-                          Priority priority, LocalDate deadline) {
-        Task newTask = new Task(title, description, category, priority, deadline);
+                          Priority priority, LocalDate deadline, Task.TaskStatus status) {
+        Task newTask = new Task(title, description, category, priority, deadline, TaskStatus.OPEN); // a new task status is always open
         tasks.add(newTask);
     }
 
 
     public void updateTask(Task task, String title, String description,
-                          Category category, Priority priority, LocalDate deadline) {
+                          Category category, Priority priority, LocalDate deadline, Task.TaskStatus status) {
         //Update task details
-        task.updateTask(title, description, category, priority, deadline);
+        task.updateTask(title, description, category, priority, deadline, status);
     }
 
     public void deleteTask(Task task) {
@@ -122,7 +124,7 @@ public class TaskController {
         LocalDate now = LocalDate.now();
         LocalDate futureDate = now.plusDays(days);
         List<Task> results = tasks.stream()
-        .filter(task -> task.getDeadline().isBefore(futureDate) && !task.getDeadline().isBefore(now))
+        .filter(task -> task.getDeadline().isBefore(futureDate) && !task.getDeadline().isBefore(now) && task.getStatus() != TaskStatus.COMPLETED)
         .collect(Collectors.toList());
         return results;
     }
