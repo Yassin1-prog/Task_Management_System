@@ -1,1 +1,53 @@
-[]
+[
+  {
+    "task": {
+      "title": "Explore--Validation",
+      "description": "I cant let go babydoll spitting through nations i am outclasses its outragoues yeah oh yeah ohoh baby doll babydoll spitting through stations i am outclasses its oruragoues oh yeah ohunfsdl",
+      "category": {
+        "name": "Personal"
+      },
+      "priority": {
+        "name": "Riveniera",
+        "isDefault": false
+      },
+      "deadline": "2025-02-18",
+      "status": "OPEN"
+    },
+    "type": "CUSTOM_DATE",
+    "reminderDate": "2025-02-18"
+  },
+  {
+    "task": {
+      "title": "worldom",
+      "description": "refdaeg\\searfesrg",
+      "category": {
+        "name": "Harden"
+      },
+      "priority": {
+        "name": "Mythicol",
+        "isDefault": false
+      },
+      "deadline": "2025-02-18",
+      "status": "OPEN"
+    },
+    "type": "CUSTOM_DATE",
+    "reminderDate": "2025-02-18"
+  },
+  {
+    "task": {
+      "title": "worldom",
+      "description": "refdaeg\\searfesrg",
+      "category": {
+        "name": "Harden"
+      },
+      "priority": {
+        "name": "Mythicol",
+        "isDefault": false
+      },
+      "deadline": "2025-02-18",
+      "status": "OPEN"
+    },
+    "type": "ONE_WEEK_BEFORE",
+    "reminderDate": "2025-02-11"
+  }
+]

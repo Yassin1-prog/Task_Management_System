@@ -7,6 +7,7 @@ import com.medialab.model.Category;
 import com.medialab.view.components.CategoryView;
 import com.medialab.view.dialogs.CategoryDialog;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
@@ -55,8 +56,12 @@ public class CategoryListView extends BorderPane {
         // Open CategoryDialog for adding a new category
         CategoryDialog dialog = new CategoryDialog();
         dialog.showAndWait().ifPresent(category -> {
-            categoryController.createCategory(category.getName());
-            loadCategories(); // Refresh the category list
+            if(categoryController.getCategoryByName(category.getName()) == null) {
+                categoryController.createCategory(category.getName());
+                loadCategories(); // Refresh the category list
+            } else {
+                showAlert("A category with the same name arleady exists.");
+            }
         });
     }
 
@@ -67,8 +72,13 @@ public class CategoryListView extends BorderPane {
             CategoryDialog dialog = new CategoryDialog();
             dialog.setCategory(selectedCategoryView.getCategory());
             dialog.showAndWait().ifPresent(category -> {
-                categoryController.updateCategory(selectedCategoryView.getCategory(), category.getName());
-                loadCategories(); // Refresh the category list
+                if(categoryController.getCategoryByName(category.getName()) == null || category.getName().equals(selectedCategoryView.getCategory().getName())) {
+                    categoryController.updateCategory(selectedCategoryView.getCategory(), category.getName());
+                    loadCategories(); // Refresh the category list
+                } else {
+                    showAlert("A category with the same name arleady exists.");
+                }
+               
             });
         }
     }
@@ -88,5 +98,13 @@ public class CategoryListView extends BorderPane {
             loadCategories(); // Refresh the category list
             mainView.refreshStatistics(); // when a category is deleted tasks get deleted as well
         }
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Invalid Task Name");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

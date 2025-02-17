@@ -3,6 +3,7 @@ package com.medialab.controller;
 import com.medialab.model.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
 
 public class ReminderController {
@@ -33,6 +34,13 @@ public class ReminderController {
 
     public void deleteRemindersForTask(Task task) {
         reminders.removeIf(reminder -> reminder.getTask().equals(task));
+    }
+
+    public List<Reminder> getRemindersForToday() {
+        LocalDate today = LocalDate.now();
+        return reminders.stream()
+            .filter(reminder -> reminder.getReminderDate().isEqual(today))
+            .collect(Collectors.toList());
     }
 
     public List<Reminder> getAllReminders() {

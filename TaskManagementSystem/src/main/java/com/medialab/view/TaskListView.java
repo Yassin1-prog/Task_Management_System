@@ -8,6 +8,7 @@ import com.medialab.model.Task.TaskStatus;
 import com.medialab.view.components.TaskView;
 import com.medialab.view.dialogs.TaskDialog;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
@@ -57,9 +58,13 @@ public class TaskListView extends BorderPane {
         // Open TaskDialog for adding a new task
         TaskDialog dialog = new TaskDialog(taskController, categoryController);
         dialog.showAndWait().ifPresent(task -> {
-            taskController.createTask(task.getTitle(), task.getDescription(), task.getCategory(), task.getPriority(), task.getDeadline(), task.getStatus());
-            loadTasks(); // Refresh the task list
-            mainView.refreshStatistics();
+            if(taskController.getTaskByTitle(task.getTitle()) == null) {  // dont add tasks with duplicate titles
+                taskController.createTask(task.getTitle(), task.getDescription(), task.getCategory(), task.getPriority(), task.getDeadline(), task.getStatus());
+                loadTasks(); // Refresh the task list
+                mainView.refreshStatistics();
+            } else {
+                showAlert("A task with the same title arleady exists.");
+            }
         });
     }
 
@@ -70,12 +75,16 @@ public class TaskListView extends BorderPane {
             TaskDialog dialog = new TaskDialog(taskController, categoryController);
             dialog.setTask(selectedTaskView.getTask());
             dialog.showAndWait().ifPresent(task -> {
-                taskController.updateTask(selectedTaskView.getTask(), task.getTitle(), task.getDescription(), task.getCategory(), task.getPriority(), task.getDeadline(), task.getStatus());
-                if(task.getStatus() == TaskStatus.COMPLETED) {
-                    reminderController.deleteRemindersForTask(selectedTaskView.getTask());  // WHEN TASK IS MARKED AS COMPLETED, DELETE ALL REMINDERS FOR THAT TASK
+                if(taskController.getTaskByTitle(task.getTitle()) == null || task.getTitle().equals(selectedTaskView.getTask().getTitle())) {  // dont add tasks with duplicate titles
+                    taskController.updateTask(selectedTaskView.getTask(), task.getTitle(), task.getDescription(), task.getCategory(), task.getPriority(), task.getDeadline(), task.getStatus());
+                    if(task.getStatus() == TaskStatus.COMPLETED) {
+                        reminderController.deleteRemindersForTask(selectedTaskView.getTask());  // WHEN TASK IS MARKED AS COMPLETED, DELETE ALL REMINDERS FOR THAT TASK
+                    }
+                    loadTasks(); // Refresh the task list
+                    mainView.refreshStatistics();
+                } else {
+                    showAlert("A task with the same title arleady exists.");
                 }
-                loadTasks(); // Refresh the task list
-                mainView.refreshStatistics();
             });
         }
     }
@@ -89,5 +98,13 @@ public class TaskListView extends BorderPane {
             loadTasks(); // Refresh the task list
             mainView.refreshStatistics();
         }
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Invalid Task Name");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

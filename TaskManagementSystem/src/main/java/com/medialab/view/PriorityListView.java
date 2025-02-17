@@ -5,6 +5,7 @@ import com.medialab.model.Priority;
 import com.medialab.view.components.PriorityView;
 import com.medialab.view.dialogs.PriorityDialog;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
@@ -47,20 +48,28 @@ public class PriorityListView extends BorderPane {
         // Open PriorityDialog for adding a new priority
         PriorityDialog dialog = new PriorityDialog();
         dialog.showAndWait().ifPresent(priority -> {
-            taskController.createPriority(priority.getName());
-            loadPriorities(); // Refresh the priority list
+            if(taskController.getPriorityByName(priority.getName()) == null) {
+                taskController.createPriority(priority.getName());
+                loadPriorities(); // Refresh the priority list
+            } else {
+                showAlert("A priority with the same name already exists!");
+            }
         });
     }
 
     private void editPriority() {
         // Open PriorityDialog for editing the selected priority
         PriorityView selectedPriorityView = priorityListView.getSelectionModel().getSelectedItem();
-        if (selectedPriorityView != null && !selectedPriorityView.getPriority().isDefaultPriority()) {
+        if (selectedPriorityView != null && !selectedPriorityView.getPriority().isDefaultPriority()) { //default priority cannot be edited
             PriorityDialog dialog = new PriorityDialog();
             dialog.setPriority(selectedPriorityView.getPriority());
             dialog.showAndWait().ifPresent(priority -> {
-                taskController.updatePriority(selectedPriorityView.getPriority(), priority.getName());
-                loadPriorities(); // Refresh the priority list
+                if(taskController.getPriorityByName(priority.getName()) == null || priority.getName().equals(selectedPriorityView.getPriority().getName())) {
+                    taskController.updatePriority(selectedPriorityView.getPriority(), priority.getName());
+                    loadPriorities(); // Refresh the priority list
+                } else {
+                    showAlert("A priority with the same name already exists!");
+                }
             });
         }
     }
@@ -68,9 +77,17 @@ public class PriorityListView extends BorderPane {
     private void deletePriority() {
         // Delete the selected priority (if not default)
         PriorityView selectedPriorityView = priorityListView.getSelectionModel().getSelectedItem();
-        if (selectedPriorityView != null && !selectedPriorityView.getPriority().isDefaultPriority()) {
+        if (selectedPriorityView != null && !selectedPriorityView.getPriority().isDefaultPriority()) { // default priority cannot be deleted
             taskController.deletePriority(selectedPriorityView.getPriority());
             loadPriorities(); // Refresh the priority list
         }
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Invalid Task Name");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

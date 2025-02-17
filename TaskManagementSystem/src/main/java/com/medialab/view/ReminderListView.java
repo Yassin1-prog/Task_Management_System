@@ -43,6 +43,7 @@ public class ReminderListView extends BorderPane {
     private void loadReminders() {
         reminderListView.getItems().clear();
         for (Reminder reminder : reminderController.getAllReminders()) {
+            reminder.updateReminder(reminder.getType(), reminder.getReminderDate()); // in case task deadline gets changed
             reminderListView.getItems().add(new ReminderView(reminder));
         }
     }
