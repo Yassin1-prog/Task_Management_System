@@ -1,5 +1,6 @@
 package com.medialab.view.dialogs;
 
+import com.medialab.controller.TaskController;
 import com.medialab.model.Reminder;
 import com.medialab.model.Task;
 import javafx.scene.control.*;
@@ -7,13 +8,18 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ReminderDialog extends Dialog<Reminder> {
-    private ComboBox<Task> taskComboBox;
+    private TaskController taskController;
+    private ComboBox<String> taskComboBox;
     private ComboBox<Reminder.ReminderType> typeComboBox;
     private DatePicker customDatePicker;
 
-    public ReminderDialog() {
+    private final ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+
+    public ReminderDialog(TaskController taskController) {
+        this.taskController = taskController;
         this.setTitle("Add/Edit Reminder");
 
         // Create form fields
@@ -21,11 +27,13 @@ public class ReminderDialog extends Dialog<Reminder> {
         typeComboBox = new ComboBox<>();
         customDatePicker = new DatePicker();
 
-        // Populate the type combo box
+        // Populate the type combo box and tasks
         typeComboBox.getItems().addAll(Reminder.ReminderType.values());
+        taskController.getAllTasks().stream()
+            .filter(task -> task.getStatus() != Task.TaskStatus.COMPLETED) // Filter out completed tasks
+            .forEach(task -> taskComboBox.getItems().add(task.getTitle())); // Add remaining tasks to the combo box
 
         // Set up the dialog buttons
-        ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
         this.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
         // Create the form layout
@@ -55,7 +63,7 @@ public class ReminderDialog extends Dialog<Reminder> {
             public Reminder call(ButtonType buttonType) {
                 if (buttonType == saveButtonType) {
                     return new Reminder(
-                            taskComboBox.getValue(),
+                            taskController.getTaskByTitle(taskComboBox.getValue()),
                             typeComboBox.getValue(),
                             customDatePicker.getValue()
                     );
@@ -69,16 +77,12 @@ public class ReminderDialog extends Dialog<Reminder> {
         boolean isValid = taskComboBox.getValue() != null &&
                           typeComboBox.getValue() != null &&
                           (typeComboBox.getValue() != Reminder.ReminderType.CUSTOM_DATE || customDatePicker.getValue() != null);
-        this.getDialogPane().lookupButton(ButtonType.OK).setDisable(!isValid);
+        this.getDialogPane().lookupButton(saveButtonType).setDisable(!isValid);
     }
 
     public void setReminder(Reminder reminder) {
-        taskComboBox.setValue(reminder.getTask());
+        taskComboBox.setValue(reminder.getTaskTitle());
         typeComboBox.setValue(reminder.getType());
         customDatePicker.setValue(reminder.getReminderDate());
-    }
-
-    public void setTasks(java.util.List<Task> tasks) {
-        taskComboBox.getItems().addAll(tasks);
     }
 }

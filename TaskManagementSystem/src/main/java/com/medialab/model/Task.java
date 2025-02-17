@@ -63,6 +63,10 @@ public class Task {
         this.priority = priority;
     }
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public void updateTask(String title, String description, Category category, 
                            Priority priority, LocalDate deadline) {
         this.title = title;

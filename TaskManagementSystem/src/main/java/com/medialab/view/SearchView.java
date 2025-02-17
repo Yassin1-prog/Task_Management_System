@@ -14,7 +14,7 @@ import java.util.List;
 public class SearchView extends BorderPane {
     private TaskController taskController;
     private CategoryController categoryController;
-    private ListView<Task> resultListView;
+    private ListView<String> resultListView;
 
     public SearchView(TaskController taskController, CategoryController categoryController) {
         this.taskController = taskController;
@@ -27,6 +27,8 @@ public class SearchView extends BorderPane {
         ComboBox<String> priorityComboBox = new ComboBox<>();
 
         // Populate category and priority combo boxes
+        categoryComboBox.getItems().add("All Categories"); // Null option for categories
+        priorityComboBox.getItems().add("All Priorities"); // Null option for priorities
         categoryController.getAllCategories().forEach(category -> categoryComboBox.getItems().add(category.getName()));
         taskController.getAllPriorities().forEach(priority -> priorityComboBox.getItems().add(priority.getName()));
 
@@ -37,10 +39,20 @@ public class SearchView extends BorderPane {
             String category = categoryComboBox.getValue();
             String priority = priorityComboBox.getValue();
 
+            // Treat "All Categories" and "All Priorities" as null
+            if ("All Categories".equals(category)) {
+                category = null;
+            }
+            if ("All Priorities".equals(priority)) {
+                priority = null;
+            }
+
             // Perform search
             List<Task> results = taskController.searchTasks(title, category, priority);
             resultListView.getItems().clear();
-            resultListView.getItems().addAll(results);
+            results.stream()
+            .map(Task::getTitle)
+            .forEach(titlee -> resultListView.getItems().add(titlee));
         });
 
         // Create search form layout

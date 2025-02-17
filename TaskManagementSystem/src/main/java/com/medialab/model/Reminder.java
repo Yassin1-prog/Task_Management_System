@@ -28,6 +28,14 @@ public class Reminder {
         return task;
     }
 
+    public String getTaskTitle() {
+        return task.getTitle();
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
     public ReminderType getType() {
         return type;
     }

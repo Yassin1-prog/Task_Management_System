@@ -49,8 +49,7 @@ public class ReminderListView extends BorderPane {
 
     private void addReminder() {
         // Open ReminderDialog for adding a new reminder
-        ReminderDialog dialog = new ReminderDialog();
-        dialog.setTasks(taskController.getAllTasks()); // Populate tasks in the dialog
+        ReminderDialog dialog = new ReminderDialog(taskController);
         dialog.showAndWait().ifPresent(reminder -> {
             reminderController.createReminder(reminder.getTask(), reminder.getType(), reminder.getReminderDate());
             loadReminders(); // Refresh the reminder list
@@ -61,9 +60,8 @@ public class ReminderListView extends BorderPane {
         // Open ReminderDialog for editing the selected reminder
         ReminderView selectedReminderView = reminderListView.getSelectionModel().getSelectedItem();
         if (selectedReminderView != null) {
-            ReminderDialog dialog = new ReminderDialog();
+            ReminderDialog dialog = new ReminderDialog(taskController);
             dialog.setReminder(selectedReminderView.getReminder());
-            dialog.setTasks(taskController.getAllTasks()); // Populate tasks in the dialog
             dialog.showAndWait().ifPresent(reminder -> {
                 reminderController.updateReminder(selectedReminderView.getReminder(), reminder.getType(), reminder.getReminderDate());
                 loadReminders(); // Refresh the reminder list

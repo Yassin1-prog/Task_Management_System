@@ -32,5 +32,22 @@
     },
     "type": "CUSTOM_DATE",
     "reminderDate": "2025-02-18"
+  },
+  {
+    "task": {
+      "title": "Past Due Task",
+      "description": "This task is already delayed",
+      "category": {
+        "name": "Work Projects"
+      },
+      "priority": {
+        "name": "Default",
+        "isDefault": true
+      },
+      "deadline": "2025-02-15",
+      "status": "DELAYED"
+    },
+    "type": "ONE_WEEK_BEFORE",
+    "reminderDate": "2025-02-08"
   }
 ]

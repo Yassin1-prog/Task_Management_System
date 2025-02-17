@@ -32,13 +32,30 @@ public class MainView extends BorderPane {
 
         // Bottom section with tabs for tasks, categories, reminders, priorities, and search
         TabPane tabPane = new TabPane();
-        Tab taskTab = new Tab("Tasks", new TaskListView(taskController));
-        Tab categoryTab = new Tab("Categories", new CategoryListView(categoryController, taskController));
-        Tab reminderTab = new Tab("Reminders", new ReminderListView(reminderController, taskController));
-        Tab priorityTab = new Tab("Priorities", new PriorityListView(taskController));
-        Tab searchTab = new Tab("Search", new SearchView(taskController, categoryController));
+
+        Tab taskTab = new Tab("Tasks");
+        Tab categoryTab = new Tab("Categories");
+        Tab reminderTab = new Tab("Reminders");
+        Tab priorityTab = new Tab("Priorities");
+        Tab searchTab = new Tab("Search");
 
         tabPane.getTabs().addAll(taskTab, categoryTab, reminderTab, priorityTab, searchTab);
+
+        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+            if (newTab != null) {
+                if (newTab == taskTab) {
+                    newTab.setContent(new TaskListView(taskController, categoryController, reminderController));
+                } else if (newTab == categoryTab) {
+                    newTab.setContent(new CategoryListView(categoryController, taskController));
+                } else if (newTab == reminderTab) {
+                    newTab.setContent(new ReminderListView(reminderController, taskController));
+                } else if (newTab == priorityTab) {
+                    newTab.setContent(new PriorityListView(taskController));
+                } else if (newTab == searchTab) {
+                    newTab.setContent(new SearchView(taskController, categoryController));
+                }
+            }
+        });
 
         // Main layout
         this.setTop(topSection);

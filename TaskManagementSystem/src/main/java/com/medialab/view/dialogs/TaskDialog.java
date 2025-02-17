@@ -1,22 +1,34 @@
 package com.medialab.view.dialogs;
 
 import com.medialab.model.Task;
+import com.medialab.controller.CategoryController;
+import com.medialab.controller.TaskController;
 import com.medialab.model.Category;
 import com.medialab.model.Priority;
+import com.medialab.model.Reminder;
+
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class TaskDialog extends Dialog<Task> {
+    private TaskController taskController;
+    private CategoryController categoryController;
     private TextField titleField;
     private TextArea descriptionField;
-    private ComboBox<Category> categoryComboBox;
-    private ComboBox<Priority> priorityComboBox;
+    private ComboBox<String> categoryComboBox;
+    private ComboBox<String> priorityComboBox;
     private DatePicker deadlinePicker;
+    private ComboBox<Task.TaskStatus> statusComboBox;
 
-    public TaskDialog() {
+    private final ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+
+    public TaskDialog(TaskController taskController, CategoryController categoryController) {
+        this.taskController = taskController;
+        this.categoryController = categoryController;
         this.setTitle("Add/Edit Task");
 
         // Create form fields
@@ -25,9 +37,14 @@ public class TaskDialog extends Dialog<Task> {
         categoryComboBox = new ComboBox<>();
         priorityComboBox = new ComboBox<>();
         deadlinePicker = new DatePicker();
+        statusComboBox = new ComboBox<>();
 
-        // Set up the dialog buttons
-        ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        // Populate category and priority combo boxes as well as task status
+        categoryController.getAllCategories().forEach(category -> categoryComboBox.getItems().add(category.getName()));
+        taskController.getAllPriorities().forEach(priority -> priorityComboBox.getItems().add(priority.getName()));
+        statusComboBox.getItems().addAll(Task.TaskStatus.values());
+
+    
         this.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
         // Create the form layout
@@ -44,6 +61,8 @@ public class TaskDialog extends Dialog<Task> {
         grid.add(priorityComboBox, 1, 3);
         grid.add(new Label("Deadline:"), 0, 4);
         grid.add(deadlinePicker, 1, 4);
+        grid.add(new Label("Status:"), 0, 5);
+        grid.add(statusComboBox, 1, 5);
 
         this.getDialogPane().setContent(grid);
 
@@ -53,6 +72,8 @@ public class TaskDialog extends Dialog<Task> {
         // Add validation
         titleField.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
         deadlinePicker.valueProperty().addListener((observable, oldValue, newValue) -> validateForm());
+        categoryComboBox.valueProperty().addListener((observable, oldValue, newValue) -> validateForm());
+        priorityComboBox.valueProperty().addListener((observable, oldValue, newValue) -> validateForm());
 
         // Set the result converter
         this.setResultConverter(new Callback<ButtonType, Task>() {
@@ -62,8 +83,8 @@ public class TaskDialog extends Dialog<Task> {
                     return new Task(
                             titleField.getText(),
                             descriptionField.getText(),
-                            categoryComboBox.getValue(),
-                            priorityComboBox.getValue(),
+                            categoryController.getCategoryByName(categoryComboBox.getValue()),
+                            taskController.getPriorityByName(priorityComboBox.getValue()),
                             deadlinePicker.getValue()
                     );
                 }
@@ -74,16 +95,19 @@ public class TaskDialog extends Dialog<Task> {
 
     private void validateForm() {
         boolean isValid = !titleField.getText().isEmpty() &&
-                          deadlinePicker.getValue() != null &&
-                          !deadlinePicker.getValue().isBefore(LocalDate.now());
-        this.getDialogPane().lookupButton(ButtonType.OK).setDisable(!isValid);
+                           deadlinePicker.getValue() != null &&
+                           !deadlinePicker.getValue().isBefore(LocalDate.now()) &&
+                           categoryComboBox.getValue() != null &&
+                           priorityComboBox.getValue() != null;
+        this.getDialogPane().lookupButton(saveButtonType).setDisable(!isValid);
     }
 
     public void setTask(Task task) {
         titleField.setText(task.getTitle());
         descriptionField.setText(task.getDescription());
-        categoryComboBox.setValue(task.getCategory());
-        priorityComboBox.setValue(task.getPriority());
+        categoryComboBox.setValue(task.getCategoryName());
+        priorityComboBox.setValue(task.getPriorityName());
         deadlinePicker.setValue(task.getDeadline());
+        statusComboBox.setValue(task.getStatus());
     }
 }

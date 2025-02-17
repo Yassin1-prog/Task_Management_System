@@ -56,6 +56,13 @@ public class TaskController {
         tasks.remove(task);
     }
 
+    public Task getTaskByTitle(String title) {
+        return tasks.stream()
+            .filter(task -> task.getTitle().equals(title))
+            .findFirst()
+            .orElse(null);
+    }
+
     public List<Task> searchTasks(String title, Category category, Priority priority) {
         List<Task> results = tasks.stream()
         .filter(task -> task.getTitle().contains(title) || 
@@ -66,12 +73,11 @@ public class TaskController {
     }
 
     public List<Task> searchTasks(String title, String categoryName, String priorityName) {
-        List<Task> results = tasks.stream()
-        .filter(task -> task.getTitle().contains(title) || 
-                        task.getCategoryName().contains(categoryName) || 
-                        task.getPriorityName().equals(priorityName))
-        .collect(Collectors.toList());
-        return results;
+        return tasks.stream()
+            .filter(task -> (title == null || task.getTitle().toLowerCase().contains(title.toLowerCase())) &&
+                            (categoryName == null || task.getCategoryName().equals(categoryName)) &&
+                            (priorityName == null || task.getPriorityName().equals(priorityName)))
+            .collect(Collectors.toList());
     }
 
     public void checkDelayedTasks() {
@@ -104,6 +110,13 @@ public class TaskController {
         priorities.remove(priority);
         updateTaskPriorities(priority, getDefaultPriority());
     }
+
+    public Priority getPriorityByName(String name) {
+        return priorities.stream()
+            .filter(priority -> priority.getName().equals(name))
+            .findFirst()
+            .orElse(null);
+    }   
 
     public List<Task> getTasksDueWithinDays(int days) {
         LocalDate now = LocalDate.now();

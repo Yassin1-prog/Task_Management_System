@@ -7,6 +7,7 @@ import javafx.util.Callback;
 
 public class CategoryDialog extends Dialog<Category> {
     private TextField nameField;
+    private final ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
 
     public CategoryDialog() {
         this.setTitle("Add/Edit Category");
@@ -15,7 +16,6 @@ public class CategoryDialog extends Dialog<Category> {
         nameField = new TextField();
 
         // Set up the dialog buttons
-        ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
         this.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
         // Create the form layout
@@ -47,7 +47,7 @@ public class CategoryDialog extends Dialog<Category> {
 
     private void validateForm() {
         boolean isValid = !nameField.getText().isEmpty();
-        this.getDialogPane().lookupButton(ButtonType.OK).setDisable(!isValid);
+        this.getDialogPane().lookupButton(saveButtonType).setDisable(!isValid);
     }
 
     public void setCategory(Category category) {

@@ -53,6 +53,7 @@ public class DataManager {
             new TypeToken<List<Task>>() {}.getType()
         );
         if (tasks != null) {
+            reconstructTaskRelationships(tasks);
             taskController.initializeTasks(tasks);
         }
 
@@ -62,7 +63,35 @@ public class DataManager {
             new TypeToken<List<Reminder>>() {}.getType()
         );
         if (reminders != null) {
+            reconstructReminderRelationship(reminders);
             reminderController.initializeReminders(reminders);
         }
     }
+     
+    private void reconstructTaskRelationships(List<Task> tasks) {
+        // Reconstruct relationships for each task
+        for (Task task : tasks) {
+            // Set the Category reference
+            if (task.getCategoryName() != null) { 
+                Category category = categoryController.getCategoryByName(task.getCategoryName());
+                task.setCategory(category);
+            }
+    
+            // Set the Priority reference
+            if (task.getPriorityName() != null) { 
+                Priority priority = taskController.getPriorityByName(task.getPriorityName());
+                task.setPriority(priority);
+            }
+        }
+    }
+
+    private void reconstructReminderRelationship(List<Reminder> reminders) {
+        for(Reminder reminder : reminders) {
+            if(reminder.getTaskTitle() != null) {
+                Task task = taskController.getTaskByTitle(reminder.getTaskTitle());
+                reminder.setTask(task);
+            }
+        }
+    }
+    
 }

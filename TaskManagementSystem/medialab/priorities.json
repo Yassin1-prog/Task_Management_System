@@ -2,5 +2,13 @@
   {
     "name": "Default",
     "isDefault": true
+  },
+  {
+    "name": "Rivens",
+    "isDefault": false
+  },
+  {
+    "name": "Mythicol",
+    "isDefault": false
   }
 ]
