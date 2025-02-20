@@ -27,17 +27,22 @@ Follow these steps to set up and run the Task Management System on your local ma
 Clone the project repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/task-management-system.git
+git clone [repo_url]
 cd Task_Management_System
-Step 2: Build the Project
-Use Maven to build the project:
 ```
+
+### Step 2: Build the Project
+
+Use Maven to build the project:
 
 ```bash
 mvn clean install
+```
+
 This will compile the project and download all required dependencies.
 
-Step 3: Run the Application
+### Step 3: Run the Application
+
 Run the application using the following command:
 
 ```bash
@@ -47,14 +52,15 @@ mvn javafx:run
 
 ## Screenshots 📸
 
-<p align="center">
-  <img src="screenshots/t1.png" width="90%" height="300px" style="margin-bottom: 60px" /><br>
-  <img src="screenshots/t5.png" width="90%" height="300px" style="margin-bottom: 60px" /><br>
-  <img src="screenshots/t2.png" width="90%" height="300px" style="margin-bottom: 60px" /><br>
-  <img src="screenshots/t4.png" width="90%" height="300px" />
-  <img src="screenshots/t3.png" width="90%" height="300px" style="margin-top: 60px" />
-</p>
-
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 1200px; margin: 0 auto; padding: 20px;">
+  <img src="screenshots/t1.png" style="width: 100%; height: 350px; object-fit: contain;" />
+  <img src="screenshots/t5.png" style="width: 100%; height: 350px; object-fit: contain;" />
+  
+  <img src="screenshots/t2.png" style="width: 100%; height: 300px; object-fit: contain;" />
+  <img src="screenshots/t4.png" style="width: 100%; height: 300px; object-fit: contain;" />
+  
+  <img src="screenshots/t3.png" style="width: 100%; height: 300px; object-fit: contain;" />
+</div>
 
 ## 🌟 Features
 
