@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"com.medialab.model","l":"Category"},{"p":"com.medialab.model","l":"Priority"},{"p":"com.medialab.model","l":"Task"},{"p":"com.medialab.model","l":"Task.TaskStatus"}];updateSearchResults();

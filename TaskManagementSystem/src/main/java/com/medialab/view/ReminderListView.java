@@ -7,6 +7,7 @@ import com.medialab.model.Task;
 import com.medialab.view.components.ReminderView;
 import com.medialab.view.dialogs.ReminderDialog;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
@@ -21,23 +22,34 @@ public class ReminderListView extends BorderPane {
         this.reminderController = reminderController;
         this.taskController = taskController; // Initialize TaskController
         reminderListView = new ListView<>();
+        reminderListView.getStyleClass().add("reminder-list");
 
         // Load reminders into the list
         loadReminders();
 
-        // Add buttons for adding/editing/deleting reminders
-        Button addButton = new Button("Add Reminder");
+        // Create styled buttons with icons
+        Button addButton = createStyledButton("➕ Add Reminder", "add-button");
+        Button editButton = createStyledButton("✏️ Edit Reminder", "edit-button");
+        Button deleteButton = createStyledButton("🚮 Delete Reminder", "delete-button");
+
         addButton.setOnAction(e -> addReminder());
-
-        Button editButton = new Button("Edit Reminder");
         editButton.setOnAction(e -> editReminder());
-
-        Button deleteButton = new Button("Delete Reminder");
         deleteButton.setOnAction(e -> deleteReminder());
 
         HBox buttonBox = new HBox(10, addButton, editButton, deleteButton);
+        buttonBox.getStyleClass().add("category-button-box");
+
         this.setTop(buttonBox);
         this.setCenter(reminderListView);
+        
+        // Add padding to the main container
+        this.setPadding(new Insets(10));
+    }
+
+    private Button createStyledButton(String text, String styleClass) {
+        Button button = new Button(text);
+        button.getStyleClass().add(styleClass);
+        return button;
     }
 
     private void loadReminders() {

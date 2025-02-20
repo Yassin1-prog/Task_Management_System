@@ -2,6 +2,7 @@ com\medialab\model\Priority.class
 com\medialab\view\dialogs\ReminderDialog.class
 com\medialab\model\Reminder$ReminderType.class
 com\medialab\util\DataManager.class
+com\medialab\view\TaskListView$1$1.class
 com\medialab\model\Task.class
 com\medialab\view\dialogs\PriorityDialog$1.class
 com\medialab\view\dialogs\TaskDialog$1.class
@@ -25,6 +26,7 @@ com\medialab\util\DataManager$1.class
 com\medialab\view\MainView.class
 com\medialab\view\dialogs\CategoryDialog$1.class
 com\medialab\util\DataManager$4.class
+com\medialab\view\TaskListView$1.class
 com\medialab\view\dialogs\CategoryDialog.class
 com\medialab\view\components\TaskView.class
 com\medialab\controller\ReminderController.class

@@ -3,10 +3,15 @@ package com.medialab.view;
 import com.medialab.controller.CategoryController;
 import com.medialab.controller.ReminderController;
 import com.medialab.controller.TaskController;
+
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
 public class MainView extends BorderPane {
@@ -23,35 +28,60 @@ public class MainView extends BorderPane {
         this.taskController = taskController;
         this.categoryController = categoryController;
         this.reminderController = reminderController;
+        
+        // Load CSS
+        this.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        
         initializeUI();
     }
 
     private void initializeUI() {
-        // Top section with summary information
-        totalTasksLabel = new Label();
-        completedTasksLabel = new Label();
-        delayedTasksLabel = new Label();
-        dueSoonLabel = new Label();
+        // Create statistics grid
+        GridPane statsGrid = new GridPane();
+        statsGrid.getStyleClass().add("statistics-box");
+        statsGrid.setHgap(15);
+        statsGrid.setVgap(15);
+
+        // Ensure each cell gets equal space
+        for (int i = 0; i < 2; i++) {
+            statsGrid.getColumnConstraints().add(new ColumnConstraints(250)); 
+            statsGrid.getRowConstraints().add(new RowConstraints(50));
+        }
+
+        // Labels for statistics
+        totalTasksLabel = createStyledLabel("📋");
+        completedTasksLabel = createStyledLabel("✅");
+        delayedTasksLabel = createStyledLabel("⏰");
+        dueSoonLabel = createStyledLabel("📅");
 
         refreshStatistics();
 
-        VBox topSection = new VBox(10, totalTasksLabel, completedTasksLabel, delayedTasksLabel, dueSoonLabel);
+        // Add labels to grid
+        statsGrid.add(totalTasksLabel, 0, 0);
+        statsGrid.add(completedTasksLabel, 1, 0);
+        statsGrid.add(delayedTasksLabel, 0, 1);
+        statsGrid.add(dueSoonLabel, 1, 1);
+        
+        // Add padding around the top section
+        BorderPane.setMargin(statsGrid, new Insets(20, 20, 10, 20));
 
-        // Bottom section with tabs for tasks, categories, reminders, priorities, and search
+        // Bottom section with tabs
         TabPane tabPane = new TabPane();
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        Tab taskTab = new Tab("Tasks");
-        Tab categoryTab = new Tab("Categories");
-        Tab reminderTab = new Tab("Reminders");
-        Tab priorityTab = new Tab("Priorities");
-        Tab searchTab = new Tab("Search");
+        Tab taskTab = createTab("Tasks", "📝");
+        Tab categoryTab = createTab("Categories", "📁");
+        Tab reminderTab = createTab("Reminders", "🔔");
+        Tab priorityTab = createTab("Priorities", "📌");
+        Tab searchTab = createTab("Search", "🔍");
 
         tabPane.getTabs().addAll(taskTab, categoryTab, reminderTab, priorityTab, searchTab);
-
-        // tasktab is the default tab
+        
+        // Set default tab
         taskTab.setContent(new TaskListView(taskController, categoryController, reminderController, this));
         tabPane.getSelectionModel().select(taskTab);
 
+        // Tab change listener
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (newTab != null) {
                 if (newTab == taskTab) {
@@ -69,15 +99,26 @@ public class MainView extends BorderPane {
         });
 
         // Main layout
-        this.setTop(topSection);
+        this.setTop(statsGrid);
         this.setCenter(tabPane);
+        BorderPane.setMargin(tabPane, new Insets(0, 20, 20, 20));
     }
 
-    // Method to refresh the statistics labels
+    private Label createStyledLabel(String emoji) {
+        Label label = new Label();
+        label.getStyleClass().add("statistics-label");
+        return label;
+    }
+
+    private Tab createTab(String text, String emoji) {
+        Tab tab = new Tab(emoji + " " + text);
+        return tab;
+    }
+
     public void refreshStatistics() {
-        totalTasksLabel.setText("Total Tasks: " + taskController.getTotalTaskCount());
-        completedTasksLabel.setText("Completed Tasks: " + taskController.getCompletedTaskCount());
-        delayedTasksLabel.setText("Delayed Tasks: " + taskController.getDelayedTaskCount());
-        dueSoonLabel.setText("Tasks Due in 7 Days: " + taskController.getTasksDueWithinDays(7).size());
+        totalTasksLabel.setText("📋 Total Tasks: " + taskController.getTotalTaskCount());
+        completedTasksLabel.setText("✅ Completed Tasks: " + taskController.getCompletedTaskCount());
+        delayedTasksLabel.setText("⏰ Delayed Tasks: " + taskController.getDelayedTaskCount());
+        dueSoonLabel.setText("📅 Tasks Due in 7 Days: " + taskController.getTasksDueWithinDays(7).size());
     }
 }

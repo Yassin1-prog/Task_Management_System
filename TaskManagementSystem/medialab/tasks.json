@@ -1,41 +1,106 @@
 [
   {
-    "title": "Explore--Validation",
-    "description": "I cant let go babydoll spitting through nations i am outclasses its outragoues yeah oh yeah ohoh baby doll babydoll spitting through stations i am outclasses its oruragoues oh yeah ohunfsdl",
+    "title": "Elden Ring Boss",
+    "description": "Beat dark knight dungeon boss next to the elden tree at 9 am.",
     "category": {
-      "name": "Personal"
+      "name": "Video Games"
     },
     "priority": {
-      "name": "Riveniera",
+      "name": "Common",
       "isDefault": false
     },
-    "deadline": "2025-02-18",
-    "status": "OPEN"
+    "deadline": "2025-02-19",
+    "status": "DELAYED"
   },
   {
-    "title": "worldom",
-    "description": "refdaeg\\searfesrg",
+    "title": "Train Football",
+    "description": "Play football completing 5 kicks at goal without taking a yellow card",
     "category": {
-      "name": "Harden"
+      "name": "Sports"
+    },
+    "priority": {
+      "name": "Rare",
+      "isDefault": false
+    },
+    "deadline": "2025-03-08",
+    "status": "IN_PROGRESS"
+  },
+  {
+    "title": "Play Basketball",
+    "description": "Score at least 30 3-points without commiting a foul and with 67% shooting ",
+    "category": {
+      "name": "Sports"
     },
     "priority": {
       "name": "Mythicol",
       "isDefault": false
     },
-    "deadline": "2025-02-18",
+    "deadline": "2025-02-10",
+    "status": "DELAYED"
+  },
+  {
+    "title": "Piano Symphony",
+    "description": "Practice the piano extensively",
+    "category": {
+      "name": "Music"
+    },
+    "priority": {
+      "name": "Common",
+      "isDefault": false
+    },
+    "deadline": "2025-02-25",
+    "status": "COMPLETED"
+  },
+  {
+    "title": "ML training",
+    "description": "Pre process the input data without replacing categorical columns.",
+    "category": {
+      "name": "School"
+    },
+    "priority": {
+      "name": "Legendary",
+      "isDefault": false
+    },
+    "deadline": "2025-05-22",
+    "status": "IN_PROGRESS"
+  },
+  {
+    "title": "Guitar Cords",
+    "description": "Fix John guitar chords before his performance on saturday night.",
+    "category": {
+      "name": "Music"
+    },
+    "priority": {
+      "name": "Common",
+      "isDefault": false
+    },
+    "deadline": "2025-03-06",
     "status": "OPEN"
   },
   {
-    "title": "play zedyasuolessin",
-    "description": "league of legends",
+    "title": "Statistical Analysis",
+    "description": "Do the statystical analysis for earthquakes in Turkey using Rstudio with package \"x2349.8\" and dataset 8920",
     "category": {
-      "name": "Softeng"
+      "name": "School"
     },
     "priority": {
-      "name": "Riveniera",
+      "name": "Default",
+      "isDefault": true
+    },
+    "deadline": "2025-02-20",
+    "status": "COMPLETED"
+  },
+  {
+    "title": "Control System",
+    "description": "Solve differential equations with matrices A,B and C. Find their inverse first and use Laplace equation for easier calculations. Document your answers in a clear and constructive manner.",
+    "category": {
+      "name": "School"
+    },
+    "priority": {
+      "name": "Common",
       "isDefault": false
     },
-    "deadline": "2025-02-17",
-    "status": "DELAYED"
+    "deadline": "2027-08-31",
+    "status": "OPEN"
   }
 ]

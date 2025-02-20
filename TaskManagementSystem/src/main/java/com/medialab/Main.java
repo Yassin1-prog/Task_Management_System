@@ -12,6 +12,9 @@ import com.medialab.view.MainView;
 import javafx.application.Application;
 import javafx.scene.Scene; // Import Scene class
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -19,6 +22,7 @@ public class Main extends Application {
     private CategoryController categoryController;
     private ReminderController reminderController;
     private DataManager dataManager;
+    private static final String ICON_URL = "http://cdn-icons-png.flaticon.com/512/2098/2098402.png"; // removes https
 
     @Override
     public void start(Stage primaryStage) {
@@ -26,6 +30,7 @@ public class Main extends Application {
         taskController = new TaskController();
         categoryController = new CategoryController();
         reminderController = new ReminderController();
+        Image appIcon = new Image(ICON_URL);
 
         // Initialize DataManager
         dataManager = new DataManager(taskController, categoryController, reminderController);
@@ -37,8 +42,10 @@ public class Main extends Application {
         MainView mainView = new MainView(taskController, categoryController, reminderController);
 
         // Set up the primary stage
+        Scene scene = new Scene(mainView, 1000, 700);
+        primaryStage.getIcons().add(appIcon);
         primaryStage.setTitle("Medialab Assistant");
-        primaryStage.setScene(new Scene(mainView, 800, 600)); // Create a Scene with MainView
+        primaryStage.setScene(scene); // Create a Scene with MainView
         primaryStage.show();
 
         // Check for delayed tasks and today's reminders
@@ -78,6 +85,17 @@ public class Main extends Application {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+
+        // Add custom styling class
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStyleClass().add("alert");
+        
+        // Add custom styles for the buttons
+        dialogPane.getButtonTypes().forEach(buttonType -> {
+            Button button = (Button) dialogPane.lookupButton(buttonType);
+            button.getStyleClass().add("alert-button");
+        });
+
         alert.showAndWait();
     }
 

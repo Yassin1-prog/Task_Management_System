@@ -1,53 +1,70 @@
 [
   {
     "task": {
-      "title": "Explore--Validation",
-      "description": "I cant let go babydoll spitting through nations i am outclasses its outragoues yeah oh yeah ohoh baby doll babydoll spitting through stations i am outclasses its oruragoues oh yeah ohunfsdl",
+      "title": "Guitar Cords",
+      "description": "Fix John guitar chords before his performance on saturday night.",
       "category": {
-        "name": "Personal"
+        "name": "Music"
       },
       "priority": {
-        "name": "Riveniera",
+        "name": "Common",
         "isDefault": false
       },
-      "deadline": "2025-02-18",
+      "deadline": "2025-03-06",
       "status": "OPEN"
     },
     "type": "CUSTOM_DATE",
+    "reminderDate": "2025-02-26"
+  },
+  {
+    "task": {
+      "title": "Elden Ring Boss",
+      "description": "Beat dark knight dungeon boss next to the elden tree at 9 am.",
+      "category": {
+        "name": "Video Games"
+      },
+      "priority": {
+        "name": "Common",
+        "isDefault": false
+      },
+      "deadline": "2025-02-19",
+      "status": "DELAYED"
+    },
+    "type": "ONE_DAY_BEFORE",
     "reminderDate": "2025-02-18"
   },
   {
     "task": {
-      "title": "worldom",
-      "description": "refdaeg\\searfesrg",
+      "title": "ML training",
+      "description": "Pre process the input data without replacing categorical columns.",
       "category": {
-        "name": "Harden"
+        "name": "School"
       },
       "priority": {
-        "name": "Mythicol",
+        "name": "Legendary",
         "isDefault": false
       },
-      "deadline": "2025-02-18",
-      "status": "OPEN"
+      "deadline": "2025-05-22",
+      "status": "IN_PROGRESS"
     },
     "type": "CUSTOM_DATE",
-    "reminderDate": "2025-02-18"
+    "reminderDate": "2025-03-04"
   },
   {
     "task": {
-      "title": "worldom",
-      "description": "refdaeg\\searfesrg",
+      "title": "Control System",
+      "description": "Solve differential equations with matrices A,B and C. Find their inverse first and use Laplace equation for easier calculations. Document your answers in a clear and constructive manner.",
       "category": {
-        "name": "Harden"
+        "name": "School"
       },
       "priority": {
-        "name": "Mythicol",
+        "name": "Common",
         "isDefault": false
       },
-      "deadline": "2025-02-18",
+      "deadline": "2027-08-31",
       "status": "OPEN"
     },
-    "type": "ONE_WEEK_BEFORE",
-    "reminderDate": "2025-02-11"
+    "type": "CUSTOM_DATE",
+    "reminderDate": "2025-03-07"
   }
 ]

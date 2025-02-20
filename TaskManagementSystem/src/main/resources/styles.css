@@ -1,69 +1,397 @@
+/* Base styles for the application */
 .root {
-    -fx-font-family: 'System';
+    -fx-background-color: white;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-.button {
-    -fx-background-color: #0d6efd;
-    -fx-text-fill: white;
-    -fx-padding: 8 16;
-    -fx-background-radius: 4;
+/* Custom colors */
+* {
+    -fx-primary-color: darkslateblue;
+    -fx-primary-light: derive(darkslateblue, 40%);
+    -fx-primary-dark: derive(darkslateblue, -20%);
 }
 
-.button:hover {
-    -fx-background-color: #0b5ed7;
+/* Grid layout for statistics */
+.statistics-box {
+    -fx-padding: 20px;
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-grid-lines-visible: false;
 }
 
-.delete-button {
-    -fx-background-color: #dc3545;
+.statistics-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: -fx-primary-color;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 4px;
+    -fx-background-color: derive(darkslateblue, 90%);
+    -fx-alignment: CENTER_LEFT;
 }
 
-.delete-button:hover {
-    -fx-background-color: #bb2d3b;
-}
-
+/* Tab styling */
 .tab-pane {
     -fx-background-color: transparent;
 }
 
 .tab {
-    -fx-background-color: #f8f9fa;
-    -fx-padding: 8 15;
+    -fx-background-color: white;
+    -fx-padding: 8px 15px;
+}
+
+.tab:hover {
+    -fx-background-color: -fx-primary-light;
 }
 
 .tab:selected {
+    -fx-background-color: -fx-primary-color;
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+/* Button styling */
+.button {
+    -fx-background-color: -fx-primary-color;
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: -fx-primary-light;
+}
+
+.button:pressed {
+    -fx-background-color: -fx-primary-dark;
+}
+
+/* Priority view styling */
+.priority-view {
     -fx-background-color: white;
+    -fx-padding: 12px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 1);
+    -fx-cursor: hand;
 }
 
-.table-view {
+.priority-view:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);
+    -fx-background-color: derive(white, -2%);
+}
+
+.priority-view .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: -fx-primary-color;
+}
+
+.priority-list {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+.priority-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+}
+
+.priority-list .list-cell:selected .priority-view {
+    -fx-background-color: derive(-fx-primary-color, 90%);
+}
+
+/* Category view styling */
+.category-view {
     -fx-background-color: white;
-    -fx-background-radius: 5;
-    -fx-border-radius: 5;
+    -fx-padding: 12px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 1);
+    -fx-cursor: hand;
 }
 
-.table-view .column-header {
-    -fx-background-color: #f8f9fa;
+.category-view:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);
+    -fx-background-color: derive(white, -2%);
 }
 
-.text-field, .combo-box, .date-picker {
-    -fx-background-color: white;
-    -fx-border-color: #ced4da;
-    -fx-border-radius: 4;
-    -fx-background-radius: 4;
-    -fx-padding: 5;
+.category-view .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: -fx-primary-color;
 }
 
-.stats-box {
-    -fx-background-color: white;
-    -fx-padding: 15;
-    -fx-spacing: 10;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
+.category-list {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
 }
 
-.stat-container {
-    -fx-background-color: #f8f9fa;
-    -fx-padding: 15;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
+.category-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+}
+
+.category-list .list-cell:selected .category-view {
+    -fx-background-color: derive(-fx-primary-color, 90%);
+}
+
+/* Category button box styling, will be used for tasks,reminders and priorities as well */
+.category-button-box {
+    -fx-padding: 15px;
+    -fx-spacing: 10px;
     -fx-alignment: center;
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+/* Reminder view styling */
+.reminder-view {
+    -fx-background-color: white;
+    -fx-padding: 15px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 1);
+    -fx-cursor: hand;
+}
+
+.reminder-view:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);
+    -fx-background-color: derive(white, -2%);
+}
+
+.reminder-view .info-box {
+    -fx-spacing: 8px;
+}
+
+.reminder-view .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: -fx-primary-color;
+}
+
+.reminder-view .task-title {
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.reminder-view .reminder-type {
+    -fx-padding: 4px 8px;
+    -fx-background-color: derive(-fx-primary-color, 85%);
+    -fx-background-radius: 4px;
+    -fx-font-size: 12px;
+}
+
+.reminder-view .reminder-date {
+    -fx-text-fill: derive(-fx-primary-color, 20%);
+}
+
+.reminder-view .icon-label {
+    -fx-font-size: 16px;
+    -fx-min-width: 24px;
+}
+
+.reminder-list {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+.reminder-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+}
+
+.reminder-list .list-cell:selected .reminder-view {
+    -fx-background-color: derive(-fx-primary-color, 90%);
+}
+
+/* Task view styling */
+.task-view {
+    -fx-background-color: white;
+    -fx-padding: 15px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 1);
+    -fx-cursor: hand;
+    -fx-min-width: 300px;
+}
+
+.task-view:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);
+    -fx-background-color: derive(white, -2%);
+}
+
+.task-view .task-title {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: -fx-primary-color;
+}
+
+.task-view .task-description {
+    -fx-font-size: 13px;
+    -fx-wrap-text: true;
+    -fx-text-fill: derive(-fx-primary-color, 20%);
+}
+
+.task-view .task-metadata {
+    -fx-spacing: 8px;
+}
+
+.task-view .metadata-label {
+    -fx-padding: 4px 8px;
+    -fx-background-radius: 4px;
+    -fx-font-size: 12px;
+}
+
+.task-view .deadline-label {
+    -fx-background-color: derive(darkslateblue, 85%);
+}
+
+.task-view .priority-label {
+    -fx-background-color: derive(green, 85%);
+}
+
+
+.task-view .status-label {
+    -fx-background-color: derive(red, 65%);
+}
+
+
+.category-header {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-primary-color;
+    -fx-padding: 10px 0;
+}
+
+/*task list*/
+
+.task-list {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+.task-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+}
+
+.task-list .list-cell:selected .task-view {
+    -fx-background-color: derive(-fx-primary-color, 90%);
+}
+
+
+
+/* Search view styling */
+.task-search-view {
+    -fx-background-color: white;
+}
+
+/* Search form styling */
+.search-form {
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 20;
+}
+
+/* Search field styling */
+.search-field {
+    -fx-font-size: 14;
+    -fx-padding: 5;
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+}
+
+/* Search combo box styling */
+.search-combo-box {
+    -fx-font-size: 14;
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+}
+
+/* Search button styling */
+.search-button {
+    -fx-font-size: 14;
+    -fx-background-color: -fx-primary-color;
+    -fx-text-fill: white;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5;
+}
+
+.search-button:hover {
+    -fx-background-color: -fx-primary-dark;
+}
+
+/* Task card styling */
+.task-card {
+    -fx-background-color: white;
+    -fx-border-color: #eee;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 10;
+    -fx-spacing: 10;
+}
+
+.task-title {
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-primary-color;
+}
+
+.task-category {
+    -fx-font-size: 12;
+    -fx-text-fill: #4CAF50;
+}
+
+.task-priority {
+    -fx-font-size: 12;
+    -fx-text-fill: #FFC107;
+}
+
+.task-deadline {
+    -fx-font-size: 12;
+    -fx-text-fill: #F44336;
+}
+
+
+/* alert styling */
+.alert {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20px;
+}
+
+.alert > *.header-panel {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 10px;
+}
+
+.alert:information {
+    -fx-graphic: none;
+}
+
+.alert .content {
+    -fx-padding: 15px;
+    -fx-font-size: 14px;
+}
+
+.alert > *.button-bar > *.container {
+    -fx-background-color: #ffffff;
+}
+
+.alert > *.button-bar > *.container > *.button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-background-radius: 4px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+.alert > *.button-bar > *.container > *.button:hover {
+    -fx-background-color: #0056b3;
 }

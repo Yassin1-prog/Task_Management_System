@@ -1,11 +1,14 @@
 [
   {
-    "name": "Personal"
+    "name": "Music"
   },
   {
-    "name": "Harden"
+    "name": "Video Games"
   },
   {
-    "name": "Softeng"
+    "name": "School"
+  },
+  {
+    "name": "Sports"
   }
 ]

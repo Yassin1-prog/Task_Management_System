@@ -1,6 +1,8 @@
 package com.medialab.view.components;
 
 import com.medialab.model.Category;
+
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
@@ -9,19 +11,24 @@ public class CategoryView extends HBox {
 
     public CategoryView(Category category) {
         this.category = category;
+        this.getStyleClass().add("category-view");
         render();
     }
 
     private void render() {
-        // Display category name
+        // Create icon and name labels
+        Label iconLabel = new Label("📁");
+        iconLabel.setStyle("-fx-font-size: 18px;");
+
         Label nameLabel = new Label(category.getName());
+        nameLabel.setStyle("-fx-font-weight: bold;");
 
-        // Add styling (optional)
-        this.setSpacing(10);
-        this.setStyle("-fx-border-color: #ccc; -fx-border-width: 1; -fx-padding: 10;");
+        // Create content box
+        HBox contentBox = new HBox(10, iconLabel, nameLabel);
+        contentBox.setAlignment(Pos.CENTER_LEFT);
 
-        // Add the label to the HBox
-        this.getChildren().add(nameLabel);
+        this.getChildren().add(contentBox);
+        this.setAlignment(Pos.CENTER_LEFT);
     }
 
     public Category getCategory() {

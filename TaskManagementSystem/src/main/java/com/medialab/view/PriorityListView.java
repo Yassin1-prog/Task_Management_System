@@ -5,6 +5,8 @@ import com.medialab.model.Priority;
 import com.medialab.view.components.PriorityView;
 import com.medialab.view.dialogs.PriorityDialog;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -18,23 +20,35 @@ public class PriorityListView extends BorderPane {
     public PriorityListView(TaskController taskController) {
         this.taskController = taskController;
         priorityListView = new ListView<>();
+        priorityListView.getStyleClass().add("priority-list");
 
         // Load priorities into the list
         loadPriorities();
 
         // Add buttons for adding/editing/deleting priorities
-        Button addButton = new Button("Add Priority");
+        // Create styled buttons with icons
+        Button addButton = createStyledButton("➕ Add Priority", "add-button");
+        Button editButton = createStyledButton("✏️ Edit Priority", "edit-button");
+        Button deleteButton = createStyledButton("🚮 Delete Priority", "delete-button");
+
         addButton.setOnAction(e -> addPriority());
-
-        Button editButton = new Button("Edit Priority");
         editButton.setOnAction(e -> editPriority());
-
-        Button deleteButton = new Button("Delete Priority");
         deleteButton.setOnAction(e -> deletePriority());
 
         HBox buttonBox = new HBox(10, addButton, editButton, deleteButton);
+        buttonBox.getStyleClass().add("category-button-box");
+
         this.setTop(buttonBox);
         this.setCenter(priorityListView);
+
+        // Add padding to the main container
+        this.setPadding(new Insets(10));
+    }
+
+    private Button createStyledButton(String text, String styleClass) {
+        Button button = new Button(text);
+        button.getStyleClass().add(styleClass);
+        return button;
     }
 
     private void loadPriorities() {

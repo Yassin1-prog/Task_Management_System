@@ -4,11 +4,19 @@
     "isDefault": true
   },
   {
-    "name": "Riveniera",
+    "name": "Legendary",
     "isDefault": false
   },
   {
     "name": "Mythicol",
+    "isDefault": false
+  },
+  {
+    "name": "Rare",
+    "isDefault": false
+  },
+  {
+    "name": "Common",
     "isDefault": false
   }
 ]

@@ -7,6 +7,7 @@ import com.medialab.model.Category;
 import com.medialab.view.components.CategoryView;
 import com.medialab.view.dialogs.CategoryDialog;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -27,22 +28,33 @@ public class CategoryListView extends BorderPane {
         categoryListView = new ListView<>();
         this.mainView = mainView;
 
+        categoryListView.getStyleClass().add("category-list");
         // Load categories into the list
         loadCategories();
 
-        // Add buttons for adding/editing/deleting categories
-        Button addButton = new Button("Add Category");
+        // Create styled buttons with icons
+        Button addButton = createStyledButton("➕ Add Category", "add-button");
+        Button editButton = createStyledButton("✏️ Edit Category", "edit-button");
+        Button deleteButton = createStyledButton("🚮 Delete Category", "delete-button");
+
         addButton.setOnAction(e -> addCategory());
-
-        Button editButton = new Button("Edit Category");
         editButton.setOnAction(e -> editCategory());
-
-        Button deleteButton = new Button("Delete Category");
         deleteButton.setOnAction(e -> deleteCategory());
 
         HBox buttonBox = new HBox(10, addButton, editButton, deleteButton);
+        buttonBox.getStyleClass().add("category-button-box");
+
         this.setTop(buttonBox);
         this.setCenter(categoryListView);
+        
+        // Add padding to the main container
+        this.setPadding(new Insets(10));
+    }
+
+    private Button createStyledButton(String text, String styleClass) {
+        Button button = new Button(text);
+        button.getStyleClass().add(styleClass);
+        return button;
     }
 
     private void loadCategories() {
