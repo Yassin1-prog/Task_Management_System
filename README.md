@@ -52,7 +52,7 @@ mvn javafx:run
 
 ## Screenshots 📸
 
-<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 1200px; margin: 0 auto; padding: 20px;">
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 200px; margin: 0 auto; padding: 20px;">
   <img src="screenshots/t1.png" style="width: 100%; height: 350px; object-fit: contain;" />
   <img src="screenshots/t5.png" style="width: 100%; height: 350px; object-fit: contain;" />
   
@@ -61,6 +61,7 @@ mvn javafx:run
   
   <img src="screenshots/t3.png" style="width: 100%; height: 300px; object-fit: contain;" />
 </div>
+
 
 ## 🌟 Features
 
